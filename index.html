@@ -7,8 +7,12 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
-        /* 1. 字體載入 - 使用 Google Fonts 穩定備援 + 粉圓體 */
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+@font-face {
+    font-family: 'Huninn';
+    /* 這裡直接指向 .ttf 原始檔案 */
+    src: url('https://raw.githubusercontent.com/justfont/open-huninn-font/master/font/jf-openhuninn-1.1.ttf') format('truetype');
+    font-display: swap;
+};
 
         /* 2. 定義 5 種色碼的主次關係 */
         :root {
