@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>韓國童裝預購登記</title>
-    <!-- 引入 Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 引入 Lucide Icons for simplicity -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         /* 1. 載入開源粉圓體 (jf open huninn) */
@@ -18,24 +16,24 @@
             font-style: normal;
         }
 
-        /* 2. 應用自定義字體：強迫只使用 'Huninn' */
-        .font-huninn {
-            font-family: 'Huninn', 'sans-serif';
+        /* 全域字體應用 */
+        body {
+            font-family: 'Huninn', sans-serif !important;
+            color: #a7a8a1; /* 全域文字主色 */
         }
 
-        /* 3. 內容摺疊動畫 */
+        /* 內容摺疊動畫 */
         .collapsible-content {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease-out;
         }
         .collapsible-content.active {
-            /* 設置一個足夠大的值來確保所有內容都能展開 */
-            max-height: 700px; /* 增加 max-height 確保內容更多時也能展開 */
+            max-height: 800px;
             transition: max-height 0.5s ease-in;
         }
         
-        /* 4. 複製成功提示動畫 */
+        /* 複製成功提示動畫 */
         @keyframes fadeInOut {
           0% { opacity: 0; transform: translateY(5px); }
           10% { opacity: 1; transform: translateY(0); }
@@ -46,95 +44,89 @@
           animation: fadeInOut 2.5s ease-out forwards;
         }
         
-        /* Checkbox 樣式優化: 當 peer-checked 時，增加一個小小的旋轉效果 */
         .peer-checked\:rotate-3 {
             transform: rotate(3deg);
         }
+
+        /* 自定義顏色輔助類 (Tailwind 若不支援動態編譯可手寫) */
+        .bg-theme-main { background-color: #f9f4f1; }
+        .bg-theme-card { background-color: #ede4d2; }
+        .text-theme-dark { color: #a7a8a1; }
+        .text-theme-gold { color: #e2c890; }
+        .border-theme-muted { border-color: #b9c3cd; }
     </style>
 </head>
-<body class="font-huninn bg-gray-50 antialiased">
+<body class="bg-theme-main antialiased">
     <div class="min-h-screen py-8 px-4 sm:px-6 lg:px-8 flex justify-center items-start">
-        <div class="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+        <div class="max-w-md w-full bg-white rounded-3xl shadow-lg overflow-hidden border border-[#b9c3cd]/30">
 
-            <!-- Header Title -->
-            <div class="bg-rose-50 p-6 text-center border-b border-rose-100">
-                <h2 class="text-2xl font-bold text-gray-800 tracking-wide mb-1">
+            <div class="bg-[#ede4d2] p-8 text-center border-b border-[#b9c3cd]/20">
+                <h2 class="text-2xl font-bold text-[#a7a8a1] tracking-wide mb-1">
                     韓國童裝預購登記
                 </h2>
-                <p class="text-sm text-gray-500">
-                    請詳閱下方規則，確認同意後回傳 LINE
+                <p class="text-sm opacity-80">
+                    請詳閱下方 說明，確認同意後回傳 LINE
                 </p>
             </div>
 
-            <!-- 登記預購流程區塊 (置頂獨立) -->
-            <div class="bg-white p-5 border-b border-gray-100">
-                <div class="bg-rose-50/50 rounded-xl p-4 border border-rose-100">
-                    <h3 class="text-base font-bold text-rose-600 mb-3 flex items-center gap-2">
-                        <!-- 使用 Lucide Icons: Clipboard List -->
+            <div class="p-6">
+                <div class="bg-[#f9f4f1] rounded-2xl p-5 border border-[#e2c890]/30">
+                    <h3 class="text-base font-bold text-[#e2c890] mb-4 flex items-center gap-2">
                         <i data-lucide="clipboard-list" class="w-5 h-5"></i>
-                        登記預購流程
+                        預購登記流程
                     </h3>
-                    <ol class="text-sm text-gray-700 space-y-3 pl-1">
-                        <li class="flex gap-2">
-                            <span class="font-bold text-rose-400">01.</span>
+                    <ol class="text-sm text-[#a7a8a1] space-y-4 pl-1">
+                        <li class="flex gap-3">
+                            <span class="font-bold text-[#e2c890]">01.</span>
                             <span>選品加入購物車並填寫付款方式與收貨資訊，<strong>確認傳送至 LINE</strong>。</span>
                         </li>
-                        <li class="flex gap-2">
-                            <span class="font-bold text-rose-400">02.</span>
+                        <li class="flex gap-3">
+                            <span class="font-bold text-[#e2c890]">02.</span>
                             <span>登記成功會提供匯款帳號/賣貨便連結，請您完成付款。</span>
                         </li>
-                        <li class="flex gap-2">
-                            <span class="font-bold text-rose-400">03.</span>
+                        <li class="flex gap-3">
+                            <span class="font-bold text-[#e2c890]">03.</span>
                             <span>商品抵達台灣後，會盡速整理包裝出貨。</span>
                         </li>
                     </ol>
-                    <div class="mt-3 pt-3 border-t border-rose-100 text-xs text-gray-500 space-y-1">
+                    <div class="mt-4 pt-4 border-t border-[#b9c3cd]/30 text-xs opacity-70 space-y-1.5">
                         <p>⚠️ 使用匯款方式，請在 48 小時內完成結帳</p>                 
                         <p>⚠️ 取貨請攜帶證件 (需與收貨人姓名相符)</p>
-                        <p>⚠️ 貨到付款無法使用黑貓宅急便</p>
+                        <p>⚠️ 選品區皆為預購，不接急單還請見諒</p>
+                        <p>⚠️ 現貨免等待至 7-11 賣貨便直接下單</p>
                     </div>
                 </div>
             </div>
 
-            <!-- 摺疊內容列表 -->
-            <div id="sections-container" class="p-4 space-y-3 bg-gray-50/50">
-                <!-- 條款內容將由 JavaScript 渲染 -->
-            </div>
+            <div id="sections-container" class="px-6 pb-6 space-y-3">
+                </div>
 
-            <!-- 底部按鈕 -->
-            <div class="p-6 bg-white border-t border-gray-100 shadow-[0_-5px_15px_rgba(0,0,0,0.02)] z-10 relative">
+            <div class="p-6 bg-[#f9f4f1]/50 border-t border-[#b9c3cd]/20 relative">
                 
-                <!-- 複製成功提示區塊 -->
-                <div id="copy-message" class="absolute top-2 left-0 right-0 mx-6 py-2 px-4 text-sm bg-emerald-600 text-white rounded-lg text-center shadow-lg hidden">
+                <div id="copy-message" class="absolute -top-12 left-0 right-0 mx-6 py-2 px-4 text-sm bg-[#a7a8a1] text-white rounded-full text-center shadow-lg hidden">
                     <span class="font-bold">✨ 複製成功！</span> 正在開啟 LINE...
                 </div>
                 
-                <!-- 同意勾選框 -->
-                <label class="flex items-start gap-3 cursor-pointer group mb-5 select-none">
+                <label class="flex items-start gap-3 cursor-pointer group mb-6 select-none">
                     <div class="relative flex items-center mt-0.5">
                         <input id="agreed-checkbox" type="checkbox" class="peer sr-only" onchange="toggleConfirmButton()">
-                        
-                        <!-- 優化後的 Checkbox UI: 使用 peer-checked 控制樣式 -->
-                        <div class="w-5 h-5 border-2 rounded transition-all duration-200 flex items-center justify-center 
-                                    bg-white border-gray-300 group-hover:border-rose-400 
-                                    peer-checked:bg-rose-500 peer-checked:border-rose-500 peer-checked:rotate-3">
-                            <!-- 使用簡單的 check 圖示 -->
+                        <div class="w-5 h-5 border-2 rounded-md transition-all duration-200 flex items-center justify-center 
+                                    bg-white border-[#b9c3cd] group-hover:border-[#e2c890] 
+                                    peer-checked:bg-[#e2c890] peer-checked:border-[#e2c890] peer-checked:rotate-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-white opacity-0 transition-opacity duration-200 peer-checked:opacity-100"></i>
                         </div>
                     </div>
-                    <span class="text-sm text-gray-600">
-                        我已詳閱上方所有說明，並同意<span class="font-bold text-gray-800">預購規則</span>與<span class="font-bold text-gray-800">瑕疵退換標準</span>
+                    <span class="text-sm text-[#a7a8a1]">
+                        我已詳閱上方所有說明，並同意<span class="font-bold underline underline-offset-2">預購規則</span>與<span class="font-bold underline underline-offset-2">瑕疵退換標準</span>
                     </span>
                 </label>
 
-                <!-- 主要操作按鈕 -->
                 <button
                     id="confirm-button"
                     onclick="handleConfirm()"
                     disabled
-                    class="w-full py-3.5 px-4 rounded-xl font-bold text-sm transition-all duration-200 flex items-center justify-center gap-2 bg-gray-100 text-gray-400 cursor-not-allowed"
+                    class="w-full py-4 px-4 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 bg-[#b9c3cd]/30 text-[#a7a8a1] cursor-not-allowed shadow-inner"
                 >
-                    <!-- 使用 Lucide Icons: Copy -->
                     <i data-lucide="copy" class="w-4 h-4"></i>
                     <span>請先勾選同意</span>
                 </button>
@@ -143,86 +135,76 @@
     </div>
 
     <script>
-        // 設定
-        const CONFIRM_MESSAGE = "我已詳細閱讀韓國童裝預購規則、瑕疵與退換貨標準，並同意進行預購登記。";
+        const CONFIRM_MESSAGE = "我已詳細閱讀預購說明、瑕疵與退換貨標準，並同意進行預購登記。";
         const LINE_WEB_URL = "https://lin.ee/YqevOKl"; 
         
-        // 條款內容
         const sections = [
             {
                 title: "購買規則與優惠",
                 icon: "shopping-bag",
-                color: "rose",
                 content: [
-                    "💰 使用「匯款」方式：享商品 7 折優惠 (運費 $38)",
-                    "💰 使用「貨到付款」：享商品 8 折優惠 (運費依賣貨便為準)",
-                    "✓ 商品都是預購制，若有急單需求，請先詢問，會幫您確認韓國品牌方是否有現貨",
+                    "💰 全部商品享 9 折優惠",
+                    "💰 使用[匯款]購買享 8 折優惠",
+                    "💰 同步韓國品牌方換季優惠",
+                    "✓ 商品都是預購制，不接急單還請見諒",
                     "✓ 物流一律使用 7-11 交貨便與黑貓宅急便",
-                    "✓ 韓國童裝版型大多偏向合身，為了讓寶貝穿著時有更舒適的活動空間，建議可以選擇大一個尺寸",
-                    "✓ 色差提醒：商品照片會因拍攝光線、角度及不同螢幕顯色而產生些微差異，顏色請以收到的實際商品為準"
+                    "✓ 韓國童裝版型大多偏向合身，建議可以選擇大一個尺寸",
+                    "✓ 色差提醒：顏色請以收到的實際商品為準"
                 ]
             },
             {
                 title: "出貨時間與運費",
                 icon: "truck",
-                color: "blue",
                 content: [
-                    "✓ 預購商品需要等待約 14–30 個工作天 (具體時間將依韓國品牌的製作與出貨進度而定)",
+                    "✓ 預購商品需要等待約 14–30 個工作天",
                     "✓ 貨一抵台，便會以最快的速度整理寄出",
-                    "✓ [匯款] 僅使用 7-11 交貨便與黑貓宅急便出貨，運費一律 38 元",
-                    "✓ [貨到付款] 僅使用 7-11 賣貨便賣場出貨，運費一律依賣場為準",
-                    "✗ 假日 (六、日、國定假日、補班日) 及物流公司休息日皆不列入工作天的計算"
+                    "✓ [匯款] 使用 7-11 交貨便與黑貓宅急便，運費 60 元",
+                    "✓ [貨到付款] 使用 7-11 賣貨便，運費依賣場為準",
+                    "✗ 假日及物流休息日皆不列入工作天的計算"
                 ]
             },
             {
                 title: "關於斷貨",
                 icon: "alert-circle",
-                color: "amber",
                 content: [
-                    "✓ 韓國童裝款式更新速度快，偶爾會遇到品牌方臨時通知斷貨",
-                    "✓ 若您的訂單中不幸有商品斷貨，會立即通知，感謝您的理解"
+                    "✓ 韓國童裝更新速度快，偶爾會遇到品牌方臨時通知斷貨",
+                    "✓ 若您的訂單中有商品斷貨，會立即通知，感謝您的理解"
                 ]
             },
             {
                 title: "商品瑕疵標準",
                 icon: "shield-check",
-                color: "emerald",
                 content: [
-                    "✓ 收到商品後，請務必第一時間開箱檢查。若商品有任何問題，請立即聯繫並提供照片，我們會盡力為您妥善處理",
-                    "✓ 因布料特性、剪裁或車縫方式不同，同尺寸商品可能存在些微的尺寸差異，此屬正常情況，非瑕疵範圍",
-                    "⚠️ 以下情況屬瑕疵 (請立即聯繫)：",
+                    "✓ 收到商品後請第一時間開箱檢查",
+                    "✓ 同尺寸商品可能存在些微差異，此屬正常情況",
+                    "⚠️ 以下情況屬瑕疵：",
                     "✗ 衣服或布料中夾雜斷針或其他金屬異物",
-                    "✗ 拉鍊損壞、縫線斷裂或漏針、鈕扣鬆脫",
-                    "✗ 衣服尺寸標示錯誤、色差嚴重、印花或刺繡不良"
+                    "✗ 拉鍊損壞、縫線斷裂、鈕扣鬆脫",
+                    "✗ 衣服尺寸標示錯誤、印花或刺繡不良"
                 ]
             },
             {
                 title: "退換貨須知",
                 icon: "refresh-ccw",
-                color: "purple",
                 content: [
-                    "✓ 若需更換尺寸，請確保商品保持全新狀態（未下水、未剪標），並聯繫客服",
-                    "✓ 若收到錯誤或缺少的商品，請立即告知，將第一時間為您辦理退貨或補寄事宜",
-                    "✓ 基於衛生考量，襪子類等貼身衣物售出後，恕無法提供退換貨服務"
+                    "✓ 更換尺寸請確保商品保持全新狀態（未下水、未剪標）",
+                    "✓ 若收到錯誤或缺少商品，將第一時間為您處理",
+                    "✓ 襪子類等貼身衣物售出後，恕無法提供退換貨"
                 ]
             },
             {
                 title: "衣物洗滌小提醒",
                 icon: "shirt",
-                color: "sky",
                 content: [
                     "✓ 建議以不超過攝氏 40 度的水溫手洗",
-                    "✓ 請使用溫和的中性洗劑，避免刺激性化學物質",
-                    "✓ 如需機洗，請務必翻面放入洗衣袋，並選擇柔洗模式",
+                    "✓ 請使用溫和的中性洗劑",
+                    "✓ 如需機洗，請務必翻面放入洗衣袋",
                     "✓ 深色與淺色衣物請務必分開洗滌",
                     "✗ 禁止高溫煮洗、使用漂白劑或烘乾機"
                 ]
             }
         ];
 
-        /**
-         * 複製文字到剪貼簿 (HTML 原生方式)
-         */
         function copyToClipboard() {
             try {
                 const tempInput = document.createElement('textarea');
@@ -231,164 +213,109 @@
                 tempInput.style.opacity = '0';
                 document.body.appendChild(tempInput);
                 tempInput.select();
-                // 使用 document.execCommand('copy') 來確保在 iFrame 環境中兼容
                 document.execCommand('copy');
                 document.body.removeChild(tempInput);
-
                 showCopyMessage();
                 return true;
             } catch (err) {
-                console.error('無法複製到剪貼簿:', err);
                 return false;
             }
         }
 
-        /**
-         * 顯示複製成功提示
-         */
         function showCopyMessage() {
             const messageEl = document.getElementById('copy-message');
             messageEl.classList.remove('hidden');
             messageEl.classList.add('animate-fadeInOut');
-            
-            // 2.5 秒後隱藏並移除動畫 class
             setTimeout(() => {
                 messageEl.classList.add('hidden');
                 messageEl.classList.remove('animate-fadeInOut');
             }, 2500); 
         }
 
-        /**
-         * 處理確認並回傳的動作 (複製 + 開啟 LINE)
-         */
         function handleConfirm() {
             if (!document.getElementById('agreed-checkbox').checked) return;
-
-            // 步驟 1: 複製訊息到剪貼簿
             copyToClipboard();
-
-            // 步驟 2: 延遲開啟 LINE，讓使用者有時間看到複製成功的提示 (1秒後開啟)
             setTimeout(() => {
                 window.open(LINE_WEB_URL, '_blank');
             }, 1000);
         }
 
-        /**
-         * 切換區塊的展開/收合狀態
-         */
         function toggleSection(button) {
             const content = button.nextElementSibling;
             const chevronDown = button.querySelector('[data-lucide="chevron-down"]');
             const chevronUp = button.querySelector('[data-lucide="chevron-up"]');
-
-            // 切換 content 的 active class 來實現摺疊動畫
             const isActive = content.classList.toggle('active');
-            
-            // 切換圖示
             chevronDown.classList.toggle('hidden', isActive);
             chevronUp.classList.toggle('hidden', !isActive);
-
-            // 調整邊框樣式 (外層 div 是 button.parentElement)
             const parentDiv = button.parentElement;
             if (isActive) {
-                // 展開時：增加邊框和輕微陰影
-                parentDiv.classList.add('border-rose-300', 'shadow-md', 'shadow-rose-50/50');
-                parentDiv.classList.remove('border-gray-200', 'hover:border-rose-200');
+                parentDiv.style.borderColor = "#e2c890";
+                parentDiv.classList.add('shadow-sm');
             } else {
-                // 收合時：恢復預設狀態
-                parentDiv.classList.remove('border-rose-300', 'shadow-md', 'shadow-rose-50/50');
-                parentDiv.classList.add('border-gray-200', 'hover:border-rose-200');
+                parentDiv.style.borderColor = "#b9c3cd44";
+                parentDiv.classList.remove('shadow-sm');
             }
         }
 
-        /**
-         * 根據 checkbox 狀態更新按鈕樣式和狀態
-         */
         function toggleConfirmButton() {
             const checkbox = document.getElementById('agreed-checkbox');
             const button = document.getElementById('confirm-button');
             const buttonTextSpan = button.querySelector('span');
 
             if (checkbox.checked) {
-                // 啟用按鈕並更改樣式為 LINE 綠色
                 button.disabled = false;
-                button.classList.remove('bg-gray-100', 'text-gray-400', 'cursor-not-allowed');
-                // 增加 active:bg-... 實現按鈕按壓回饋
-                button.classList.add('bg-[#06C755]', 'text-white', 'shadow-lg', 'shadow-green-100', 'hover:bg-[#05b64d]', 'active:bg-[#04a044]', 'transform', 'hover:-translate-y-0.5');
+                button.style.backgroundColor = "#e2c890";
+                button.style.color = "#ffffff";
+                button.classList.remove('bg-[#b9c3cd]/30', 'text-[#a7a8a1]', 'cursor-not-allowed');
+                button.classList.add('shadow-md', 'transform', 'active:scale-95');
                 buttonTextSpan.textContent = '複製同意文字 並前往 LINE';
-                
             } else {
-                // 禁用按鈕並恢復灰色樣式
                 button.disabled = true;
-                button.classList.add('bg-gray-100', 'text-gray-400', 'cursor-not-allowed');
-                button.classList.remove('bg-[#06C755]', 'text-white', 'shadow-lg', 'shadow-green-100', 'hover:bg-[#05b64d]', 'active:bg-[#04a044]', 'transform', 'hover:-translate-y-0.5');
+                button.style.backgroundColor = "";
+                button.style.color = "";
+                button.classList.add('bg-[#b9c3cd]/30', 'text-[#a7a8a1]', 'cursor-not-allowed');
+                button.classList.remove('shadow-md', 'transform', 'active:scale-95');
                 buttonTextSpan.textContent = '請先勾選同意';
             }
-            // Checkbox UI 狀態現在完全由 CSS 的 peer-checked 控制
         }
 
-        /**
-         * 動態生成條款內容
-         */
         function renderSections() {
             const container = document.getElementById('sections-container');
-            container.innerHTML = sections.map((section, index) => {
-                // 生成內容列表
-                const listItems = section.content.map((item, i) => {
-                    // 使用正則表達式來處理 ✓/✗/⚠️ 符號後的粗體文字
+            container.innerHTML = sections.map((section) => {
+                const listItems = section.content.map((item) => {
                     const formattedItem = item.replace(/^(✓|✗|⚠️)\s*(.*)/, (match, symbol, content) => {
-                        // 處理內容中的粗體標記，例如 **文字**
-                        const processedContent = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                        return `<span class="font-bold">${symbol}</span> ${processedContent}`;
+                        return `<span class="font-bold" style="color:#e2c890">${symbol}</span> ${content}`;
                     });
-
                     const isWarning = item.includes('✗') || item.includes('⚠️');
-                    const colorClass = isWarning ? 'text-red-500 font-medium' : 'text-gray-600';
-                    return `<li class="text-sm leading-relaxed ${colorClass}">${formattedItem}</li>`;
+                    return `<li class="text-sm leading-relaxed ${isWarning ? 'opacity-100 font-medium' : 'opacity-80'}">${formattedItem}</li>`;
                 }).join('');
 
-                // 組合完整的 HTML 區塊
                 return `
-                    <div class="bg-white border rounded-xl transition-all duration-200 overflow-hidden border-gray-200 hover:border-rose-200">
-                        <button
-                            onclick="toggleSection(this)"
-                            class="w-full flex items-center justify-between p-4 text-left focus:outline-none bg-white transition-colors duration-150 hover:bg-gray-50"
-                        >
+                    <div class="bg-white border rounded-2xl transition-all duration-300 overflow-hidden border-[#b9c3cd]/30">
+                        <button onclick="toggleSection(this)" class="w-full flex items-center justify-between p-4 text-left focus:outline-none hover:bg-[#f9f4f1]/50 transition-colors">
                             <div class="flex items-center gap-3">
-                                <div class="p-2 rounded-lg bg-gray-50">
-                                    <i data-lucide="${section.icon}" class="w-5 h-5 text-${section.color}-500"></i>
+                                <div class="p-2 rounded-xl bg-[#ede4d2]/50">
+                                    <i data-lucide="${section.icon}" class="w-4 h-4 text-[#e2c890]"></i>
                                 </div>
-                                <span class="font-medium text-gray-700">
-                                    ${section.title}
-                                </span>
+                                <span class="font-medium text-[#a7a8a1]">${section.title}</span>
                             </div>
-                            <!-- 箭頭圖示 -->
-                            <div class="flex items-center transition-transform duration-300">
-                                <i data-lucide="chevron-up" class="w-4 h-4 text-gray-400 hidden"></i>
-                                <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400"></i>
+                            <div class="flex items-center">
+                                <i data-lucide="chevron-up" class="w-4 h-4 text-[#b9c3cd] hidden"></i>
+                                <i data-lucide="chevron-down" class="w-4 h-4 text-[#b9c3cd]"></i>
                             </div>
                         </button>
-                        
-                        <div class="collapsible-content px-4">
-                            <ul class="space-y-2 ml-2 border-l-2 border-rose-100 pl-4 pb-4">
+                        <div class="collapsible-content px-5">
+                            <ul class="space-y-2.5 ml-2 border-l border-[#e2c890]/30 pl-4 pb-5 mt-1">
                                 ${listItems}
                             </ul>
                         </div>
                     </div>
                 `;
             }).join('');
-            
-            // 渲染 Lucide 圖示 (在內容插入後運行)
             lucide.createIcons();
         }
 
-        // 頁面載入完成後執行
-        window.onload = function() {
-            renderSections();
-            // 初始渲染 Lucide 圖示 (為避免重複執行，已移至 renderSections 結尾)
-            // lucide.createIcons();
-        };
-
+        window.onload = renderSections;
     </script>
 </body>
 </html>
