@@ -4,314 +4,382 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>韓國童裝預購登記</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
-        /* 1. 修正字體連結：改用更穩定的字體載入方式 */
-        @font-face {
-            font-family: 'Huninn';
-            src: url('https://cdn.jsdelivr.net/gh/misakimei007/font/openhuninn.woff2') format('woff2');
-            /* 若上方連結失效，可備援為系統字體並套用全域 CSS */
-            font-display: swap;
-        }
+        /* 1. 字體載入 - 使用 Google Fonts 穩定備援 + 粉圓體 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
 
-        /* 2. 定義主題顏色變數 */
+        /* 2. 定義 5 種色碼的主次關係 */
         :root {
-            --color-1: #a7a8a1; /* 文字主色 */
-            --color-2: #e2c890; /* 重點金/按鈕 */
-            --color-3: #ede4d2; /* 區塊背景 */
-            --color-4: #f9f4f1; /* 全體背景 */
-            --color-5: #b9c3cd; /* 邊框/淡字 */
+            --c-text-deep: #4a4a46;    /* 強化對比後的深色 (由 #a7a8a1 延伸) */
+            --c-text-main: #a7a8a1;    /* 您的原始色：用於副標與說明文字 */
+            --c-accent: #e2c890;       /* 原始色：金沙色，用於重點/按鈕 */
+            --c-bg-soft: #ede4d2;      /* 原始色：溫潤米，用於小區塊底色 */
+            --c-bg-light: #f9f4f1;     /* 原始色：極淺米，用於大背景 */
+            --c-border: #b9c3cd;       /* 原始色：莫蘭迪藍灰，用於邊框 */
+            --white: #ffffff;
         }
 
-        /* 3. 套用粉圓體與質感風 */
+        /* 3. 基礎佈局 */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body {
-            font-family: 'Huninn', 'Microsoft JhengHei', sans-serif;
-            background-color: var(--color-4);
-            color: var(--color-1);
+            font-family: 'Huninn', 'Noto Sans TC', sans-serif;
+            background-color: var(--c-bg-light);
+            color: var(--c-text-deep);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            justify-content: center;
+            padding: 20px 15px;
         }
 
-        /* 內容摺疊動畫 */
-        .collapsible-content {
+        .main-card {
+            max-width: 480px;
+            width: 100%;
+            background: var(--white);
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(167, 168, 161, 0.15);
+            overflow: hidden;
+            border: 1px solid rgba(185, 195, 205, 0.4);
+        }
+
+        /* 標題區：確保對比鮮明 */
+        .header {
+            background-color: var(--c-bg-soft);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--white);
+        }
+        .header h2 { 
+            font-size: 1.6rem; 
+            font-weight: 700; 
+            color: var(--c-text-deep);
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        .header p { 
+            font-size: 0.9rem; 
+            color: var(--c-text-main); 
+            font-weight: 500;
+        }
+
+        /* 流程區塊 */
+        .section-padding { padding: 24px; }
+        
+        .flow-container {
+            background-color: var(--white);
+            border: 2px solid var(--c-bg-soft);
+            border-radius: 20px;
+            padding: 20px;
+        }
+        .flow-title {
+            color: var(--c-accent);
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .flow-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+        .flow-step {
+            font-weight: 700;
+            color: var(--c-accent);
+            font-size: 1rem;
+        }
+        .flow-content strong { color: var(--c-text-deep); }
+        
+        .flow-warn {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--c-border);
+            font-size: 0.8rem;
+            color: var(--c-text-main);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        /* 摺疊選單區 */
+        .accordion-container { padding: 0 24px 24px; }
+        
+        .acc-item {
+            background: var(--white);
+            border: 1px solid var(--c-border);
+            border-radius: 15px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        .acc-trigger {
+            width: 100%;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            color: var(--c-text-deep);
+            font-weight: 500;
+        }
+        .acc-trigger:hover { background-color: var(--c-bg-light); border-radius: 15px; }
+        
+        .acc-icon-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .icon-circle {
+            width: 32px;
+            height: 32px;
+            background-color: var(--c-bg-soft);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--c-accent);
+        }
+
+        .acc-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease-out;
+            transition: max-height 0.3s ease;
+            padding: 0 16px;
         }
-        .collapsible-content.active {
-            max-height: 1000px; /* 增加空間確保內容不被截斷 */
-            transition: max-height 0.5s ease-in;
+        .acc-content.active {
+            max-height: 800px;
+            padding-bottom: 20px;
         }
-        
-        /* 複製成功提示動畫 */
-        @keyframes fadeInOut {
-          0% { opacity: 0; transform: translateY(5px); }
-          10% { opacity: 1; transform: translateY(0); }
-          90% { opacity: 1; transform: translateY(0); }
-          100% { opacity: 0; transform: translateY(5px); }
+        .acc-list {
+            list-style: none;
+            border-left: 3px solid var(--c-bg-soft);
+            padding-left: 15px;
+            margin-left: 10px;
         }
-        .animate-fadeInOut {
-          animation: fadeInOut 2.5s ease-out forwards;
+        .acc-list li {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: var(--c-text-deep);
         }
-        
-        .peer-checked\:rotate-3 {
+
+        /* 底部固定區 */
+        .sticky-footer {
+            padding: 24px;
+            background-color: var(--white);
+            border-top: 1px solid var(--c-bg-soft);
+            position: relative;
+        }
+
+        .agree-label {
+            display: flex;
+            gap: 12px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            align-items: flex-start;
+        }
+        .check-box {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--c-border);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: 0.2s;
+            background: white;
+            margin-top: 2px;
+        }
+        input[type="checkbox"]:checked + .check-box {
+            background-color: var(--c-accent);
+            border-color: var(--c-accent);
             transform: rotate(3deg);
         }
+        .check-tick { color: white; display: none; }
+        input[type="checkbox"]:checked + .check-box .check-tick { display: block; }
 
-        /* 客製化捲軸樣式 (溫柔風) */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: var(--color-4); }
-        ::-webkit-scrollbar-thumb { background: var(--color-5); border-radius: 10px; }
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            border-radius: 15px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: not-allowed;
+            background-color: var(--c-border);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+        .btn-submit.active {
+            cursor: pointer;
+            background-color: #06C755; /* LINE 品牌綠以示功能 */
+            box-shadow: 0 8px 20px rgba(6, 199, 85, 0.2);
+        }
+
+        #toast {
+            position: absolute;
+            top: -50px;
+            left: 24px;
+            right: 24px;
+            background: var(--c-text-deep);
+            color: white;
+            padding: 10px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 0.85rem;
+            display: none;
+            z-index: 10;
+        }
+
+        .hidden { display: none; }
+        strong { font-weight: 700; }
     </style>
 </head>
-<body class="antialiased">
-    <div class="min-h-screen py-8 px-4 sm:px-6 lg:px-8 flex justify-center items-start">
-        <div class="max-w-md w-full bg-white rounded-3xl shadow-lg overflow-hidden border border-[#b9c3cd]/30">
+<body>
 
-            <div class="p-8 text-center border-b border-[#b9c3cd]/20" style="background-color: var(--color-3);">
-                <h2 class="text-2xl font-bold tracking-wide mb-1" style="color: var(--color-1);">
-                    韓國童裝預購登記
-                </h2>
-                <p class="text-sm opacity-80" style="color: var(--color-1);">
-                    請詳閱下方 說明，確認同意後回傳 LINE
-                </p>
-            </div>
+    <div class="main-card">
+        <div class="header">
+            <h2>韓國童裝預購登記</h2>
+            <p>請詳閱下方 說明，確認同意後回傳 LINE</p>
+        </div>
 
-            <div class="p-6">
-                <div class="rounded-2xl p-5 border" style="background-color: var(--color-4); border-color: var(--color-2);">
-                    <h3 class="text-base font-bold mb-4 flex items-center gap-2" style="color: var(--color-2);">
-                        <i data-lucide="clipboard-list" class="w-5 h-5"></i>
-                        預購登記流程
-                    </h3>
-                    <ol class="text-sm space-y-4 pl-1" style="color: var(--color-1);">
-                        <li class="flex gap-3">
-                            <span class="font-bold" style="color: var(--color-2);">01.</span>
-                            <span>選品加入購物車並填寫付款方式與收貨資訊，<strong>確認傳送至 LINE</strong>。</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="font-bold" style="color: var(--color-2);">02.</span>
-                            <span>登記成功會提供匯款帳號/賣貨便連結，請您完成付款。</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="font-bold" style="color: var(--color-2);">03.</span>
-                            <span>商品抵達台灣後，會盡速整理包裝出貨。</span>
-                        </li>
-                    </ol>
-                    <div class="mt-4 pt-4 border-t border-[#b9c3cd]/30 text-xs opacity-70 space-y-1.5" style="color: var(--color-1);">
-                        <p>⚠️ 使用匯款方式，請在 48 小時內完成結帳</p>                 
-                        <p>⚠️ 取貨請攜帶證件 (需與收貨人姓名相符)</p>
-                        <p>⚠️ 選品區皆為預購，不接急單還請見諒</p>
-                        <p>⚠️ 現貨免等待至 7-11 賣貨便直接下單</p>
-                    </div>
+        <div class="section-padding">
+            <div class="flow-container">
+                <div class="flow-title">
+                    <i data-lucide="clipboard-check" style="width:22px;height:22px"></i>
+                    預購登記流程
+                </div>
+                <div class="flow-item">
+                    <span class="flow-step">01.</span>
+                    <div class="flow-content">選品加入購物車並填寫付款方式與收貨資訊，<strong>確認傳送至 LINE</strong>。</div>
+                </div>
+                <div class="flow-item">
+                    <span class="flow-step">02.</span>
+                    <div class="flow-content">登記成功會提供匯款帳號/賣貨便連結，請您完成付款。</div>
+                </div>
+                <div class="flow-item">
+                    <span class="flow-step">03.</span>
+                    <div class="flow-content">商品抵達台灣後，會盡速整理包裝出貨。</div>
+                </div>
+                <div class="flow-warn">
+                    <p>⚠️ 使用匯款方式，請在 48 小時內完成結帳</p>                 
+                    <p>⚠️ 取貨請攜帶證件 (需與收貨人姓名相符)</p>
+                    <p>⚠️ 選品區皆為預購，不接急單還請見諒</p>
+                    <p>⚠️ 現貨免等待至 7-11 賣貨便直接下單</p>
                 </div>
             </div>
+        </div>
 
-            <div id="sections-container" class="px-6 pb-6 space-y-3">
+        <div id="acc-root" class="accordion-container"></div>
+
+        <div class="sticky-footer">
+            <div id="toast">✨ 複製成功！ 正在開啟 LINE...</div>
+            
+            <label class="agree-label">
+                <input type="checkbox" id="agreed-checkbox" class="hidden" onchange="toggleUI()">
+                <div class="check-box">
+                    <i data-lucide="check" class="check-tick" style="width:16px;height:16px"></i>
                 </div>
+                <span>我已詳閱上方所有說明，並同意<strong>預購規則</strong>與<strong>瑕疵退換標準</strong></span>
+            </label>
 
-            <div class="p-6 border-t border-[#b9c3cd]/20 relative" style="background-color: rgba(249, 244, 241, 0.5);">
-                
-                <div id="copy-message" class="absolute -top-12 left-0 right-0 mx-6 py-2 px-4 text-sm text-white rounded-full text-center shadow-lg hidden" style="background-color: var(--color-1);">
-                    <span class="font-bold">✨ 複製成功！</span> 正在開啟 LINE...
-                </div>
-                
-                <label class="flex items-start gap-3 cursor-pointer group mb-6 select-none">
-                    <div class="relative flex items-center mt-0.5">
-                        <input id="agreed-checkbox" type="checkbox" class="peer sr-only" onchange="toggleConfirmButton()">
-                        <div class="w-5 h-5 border-2 rounded-md transition-all duration-200 flex items-center justify-center 
-                                    bg-white border-[#b9c3cd] group-hover:border-[#e2c890] 
-                                    peer-checked:bg-[#e2c890] peer-checked:border-[#e2c890] peer-checked:rotate-3">
-                            <i data-lucide="check" class="w-3.5 h-3.5 text-white opacity-0 transition-opacity duration-200 peer-checked:opacity-100"></i>
-                        </div>
-                    </div>
-                    <span class="text-sm" style="color: var(--color-1);">
-                        我已詳閱上方所有說明，並同意<span class="font-bold underline underline-offset-2">預購規則</span>與<span class="font-bold underline underline-offset-2">瑕疵退換標準</span>
-                    </span>
-                </label>
-
-                <button
-                    id="confirm-button"
-                    onclick="handleConfirm()"
-                    disabled
-                    class="w-full py-4 px-4 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 cursor-not-allowed shadow-inner"
-                    style="background-color: rgba(185, 195, 205, 0.3); color: var(--color-1);"
-                >
-                    <i data-lucide="copy" class="w-4 h-4"></i>
-                    <span>請先勾選同意</span>
-                </button>
-            </div>
+            <button id="confirm-button" onclick="handleFinal()" class="btn-submit">
+                <i data-lucide="copy" style="width:18px"></i>
+                <span>請先勾選同意</span>
+            </button>
         </div>
     </div>
 
     <script>
-        const CONFIRM_MESSAGE = "我已詳細閱讀預購說明、瑕疵與退換貨標準，並同意進行預購登記。";
-        const LINE_WEB_URL = "https://lin.ee/YqevOKl"; 
+        const MSG = "我已詳細閱讀預購說明、瑕疵與退換貨標準，並同意進行預購登記。";
+        const LINE_URL = "https://lin.ee/YqevOKl"; 
         
-        const sections = [
-            {
-                title: "購買規則與優惠",
-                icon: "shopping-bag",
-                content: [
-                    "💰 全部商品享 9 折優惠",
-                    "💰 使用[匯款]購買享 8 折優惠",
-                    "💰 同步韓國品牌方換季優惠",
-                    "✓ 商品都是預購制，不接急單還請見諒",
-                    "✓ 物流一律使用 7-11 交貨便與黑貓宅急便",
-                    "✓ 韓國童裝版型大多偏向合身，建議可以選擇大一個尺寸",
-                    "✓ 色差提醒：顏色請以收到的實際商品為準"
-                ]
-            },
-            {
-                title: "出貨時間與運費",
-                icon: "truck",
-                content: [
-                    "✓ 預購商品需要等待約 14–30 個工作天",
-                    "✓ 貨一抵台，便會以最快的速度整理寄出",
-                    "✓ [匯款] 使用 7-11 交貨便與黑貓宅急便，運費 60 元",
-                    "✓ [貨到付款] 使用 7-11 賣貨便，運費依賣場為準",
-                    "✗ 假日及物流休息日皆不列入工作天的計算"
-                ]
-            },
-            {
-                title: "關於斷貨",
-                icon: "alert-circle",
-                content: [
-                    "✓ 韓國童裝更新速度快，偶爾會遇到品牌方臨時通知斷貨",
-                    "✓ 若您的訂單中有商品斷貨，會立即通知，感謝您的理解"
-                ]
-            },
-            {
-                title: "商品瑕疵標準",
-                icon: "shield-check",
-                content: [
-                    "✓ 收到商品後請第一時間開箱檢查",
-                    "✓ 同尺寸商品可能存在些微差異，此屬正常情況",
-                    "⚠️ 以下情況屬瑕疵：",
-                    "✗ 衣服或布料中夾雜斷針或其他金屬異物",
-                    "✗ 拉鍊損壞、縫線斷裂、鈕扣鬆脫",
-                    "✗ 衣服尺寸標示錯誤、印花或刺繡不良"
-                ]
-            },
-            {
-                title: "退換貨須知",
-                icon: "refresh-ccw",
-                content: [
-                    "✓ 更換尺寸請確保商品保持全新狀態（未下水、未剪標）",
-                    "✓ 若收到錯誤或缺少商品，將第一時間為您處理",
-                    "✓ 襪子類等貼身衣物售出後，恕無法提供退換貨"
-                ]
-            },
-            {
-                title: "衣物洗滌小提醒",
-                icon: "shirt",
-                content: [
-                    "✓ 建議以不超過攝氏 40 度的水溫手洗",
-                    "✓ 請使用溫和的中性洗劑",
-                    "✓ 如需機洗，請務必翻面放入洗衣袋",
-                    "✓ 深色與淺色衣物請務必分開洗滌",
-                    "✗ 禁止高溫煮洗、使用漂白劑或烘乾機"
-                ]
-            }
+        const data = [
+            { title: "購買規則與優惠", icon: "shopping-bag", list: ["💰 全部商品享 9 折優惠", "💰 使用[匯款]購買享 8 折優惠", "💰 同步韓國品牌方換季優惠", "✓ 商品都是預購制，不接急單還請見諒", "✓ 物流一律使用 7-11 交貨便與黑貓宅急便", "✓ 韓國童裝版型大多偏向合身，建議可以選擇大一個尺寸", "✓ 色差提醒：顏色請以收到的實際商品為準"] },
+            { title: "出貨時間與運費", icon: "truck", list: ["✓ 預購商品需要等待約 14–30 個工作天", "✓ 貨一抵台，便會以最快的速度整理寄出", "✓ [匯款] 運費一律 60 元", "✓ [貨到付款] 運費依賣場為準", "✗ 假日及物流休息日皆不列入工作天的計算"] },
+            { title: "關於斷貨", icon: "alert-circle", list: ["✓ 韓國童裝更新速度快，偶爾會遇到品牌方臨時通知斷貨", "✓ 若您的訂單中有商品斷貨，會立即通知，感謝您的理解"] },
+            { title: "商品瑕疵標準", icon: "shield-check", list: ["✓ 收到商品後請第一時間開箱檢查", "✓ 些微尺寸差異屬正常情況", "⚠️ 以下情況屬瑕疵：", "✗ 夾雜斷針或其他金屬異物", "✗ 拉鍊損壞、縫線斷裂、鈕扣鬆脫", "✗ 尺寸標示錯誤、印花或刺繡不良"] },
+            { title: "退換貨須知", icon: "refresh-ccw", list: ["✓ 更換尺寸請確保商品保持全新狀態", "✓ 若收到錯誤或缺少商品，將第一時間為您辦理", "✓ 襪子類等貼身衣物售出後，恕不提供退換貨"] },
+            { title: "衣物洗滌小提醒", icon: "shirt", list: ["✓ 建議攝氏 40 度以下手洗", "✓ 請使用溫和的中性洗劑", "✓ 如需機洗，請翻面放入洗衣袋", "✓ 深淺色衣物請務必分開洗滌", "✗ 禁止高溫煮洗、漂白或烘乾"] }
         ];
 
-        function copyToClipboard() {
-            const tempInput = document.createElement('textarea');
-            tempInput.value = CONFIRM_MESSAGE;
-            tempInput.style.position = 'fixed'; 
-            tempInput.style.opacity = '0';
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-            showCopyMessage();
+        function toggleAcc(el) {
+            const content = el.nextElementSibling;
+            const chevronDown = el.querySelector('.lucide-chevron-down');
+            const chevronUp = el.querySelector('.lucide-chevron-up');
+            const isOpen = content.classList.toggle('active');
+            
+            chevronDown.classList.toggle('hidden', isOpen);
+            chevronUp.classList.toggle('hidden', !isOpen);
+            el.parentElement.style.borderColor = isOpen ? 'var(--c-accent)' : 'var(--c-border)';
+            el.parentElement.style.boxShadow = isOpen ? '0 5px 15px rgba(226, 200, 144, 0.1)' : 'none';
         }
 
-        function showCopyMessage() {
-            const messageEl = document.getElementById('copy-message');
-            messageEl.classList.remove('hidden');
-            messageEl.classList.add('animate-fadeInOut');
-            setTimeout(() => {
-                messageEl.classList.add('hidden');
-                messageEl.classList.remove('animate-fadeInOut');
-            }, 2500); 
-        }
+        function toggleUI() {
+            const isChecked = document.getElementById('agreed-checkbox').checked;
+            const btn = document.getElementById('confirm-button');
+            const span = btn.querySelector('span');
 
-        function handleConfirm() {
-            if (!document.getElementById('agreed-checkbox').checked) return;
-            copyToClipboard();
-            setTimeout(() => {
-                window.open(LINE_WEB_URL, '_blank');
-            }, 1000);
-        }
-
-        function toggleSection(button) {
-            const content = button.nextElementSibling;
-            const chevronDown = button.querySelector('[data-lucide="chevron-down"]');
-            const chevronUp = button.querySelector('[data-lucide="chevron-up"]');
-            const isActive = content.classList.toggle('active');
-            chevronDown.classList.toggle('hidden', isActive);
-            chevronUp.classList.toggle('hidden', !isActive);
-            const parentDiv = button.parentElement;
-            parentDiv.style.borderColor = isActive ? "#e2c890" : "#b9c3cd44";
-        }
-
-        function toggleConfirmButton() {
-            const checkbox = document.getElementById('agreed-checkbox');
-            const button = document.getElementById('confirm-button');
-            const buttonTextSpan = button.querySelector('span');
-
-            if (checkbox.checked) {
-                button.disabled = false;
-                button.style.backgroundColor = "#e2c890";
-                button.style.color = "#ffffff";
-                button.classList.remove('cursor-not-allowed');
-                button.classList.add('shadow-md', 'transform', 'active:scale-95');
-                buttonTextSpan.textContent = '複製同意文字 並前往 LINE';
+            if (isChecked) {
+                btn.classList.add('active');
+                span.textContent = '複製同意文字 並前往 LINE';
             } else {
-                button.disabled = true;
-                button.style.backgroundColor = "rgba(185, 195, 205, 0.3)";
-                button.style.color = "#a7a8a1";
-                button.classList.add('cursor-not-allowed');
-                button.classList.remove('shadow-md', 'transform', 'active:scale-95');
-                buttonTextSpan.textContent = '請先勾選同意';
+                btn.classList.remove('active');
+                span.textContent = '請先勾選同意';
             }
         }
 
-        function renderSections() {
-            const container = document.getElementById('sections-container');
-            container.innerHTML = sections.map((section) => {
-                const listItems = section.content.map((item) => {
-                    const formattedItem = item.replace(/^(✓|✗|⚠️)\s*(.*)/, (match, symbol, content) => {
-                        return `<span class="font-bold" style="color:#e2c890">${symbol}</span> ${content}`;
-                    });
-                    const isWarning = item.includes('✗') || item.includes('⚠️');
-                    return `<li class="text-sm leading-relaxed ${isWarning ? 'opacity-100 font-medium' : 'opacity-80'}" style="color:var(--color-1)">${formattedItem}</li>`;
-                }).join('');
+        function handleFinal() {
+            if (!document.getElementById('agreed-checkbox').checked) return;
+            
+            const area = document.createElement('textarea');
+            area.value = MSG;
+            document.body.appendChild(area);
+            area.select();
+            document.execCommand('copy');
+            document.body.removeChild(area);
 
-                return `
-                    <div class="bg-white border rounded-2xl transition-all duration-300 overflow-hidden" style="border-color: rgba(185, 195, 205, 0.3);">
-                        <button onclick="toggleSection(this)" class="w-full flex items-center justify-between p-4 text-left focus:outline-none hover:bg-[#f9f4f1]/50 transition-colors">
-                            <div class="flex items-center gap-3">
-                                <div class="p-2 rounded-xl" style="background-color: rgba(237, 228, 210, 0.5);">
-                                    <i data-lucide="${section.icon}" class="w-4 h-4" style="color: var(--color-2);"></i>
-                                </div>
-                                <span class="font-medium" style="color: var(--color-1);">${section.title}</span>
-                            </div>
-                            <i data-lucide="chevron-down" class="w-4 h-4 text-[#b9c3cd]"></i>
-                            <i data-lucide="chevron-up" class="w-4 h-4 text-[#b9c3cd] hidden"></i>
-                        </button>
-                        <div class="collapsible-content px-5">
-                            <ul class="space-y-2.5 ml-2 border-l pl-4 pb-5 mt-1" style="border-color: rgba(226, 200, 144, 0.3);">
-                                ${listItems}
-                            </ul>
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => { window.open(LINE_URL, '_blank'); }, 800);
+            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        function init() {
+            const root = document.getElementById('acc-root');
+            root.innerHTML = data.map(item => `
+                <div class="acc-item">
+                    <button onclick="toggleAcc(this)" class="acc-trigger">
+                        <div class="acc-icon-wrap">
+                            <div class="icon-circle"><i data-lucide="${item.icon}" style="width:16px;height:16px"></i></div>
+                            <span>${item.title}</span>
                         </div>
+                        <i data-lucide="chevron-down" style="width:18px;color:var(--c-border)"></i>
+                        <i data-lucide="chevron-up" class="hidden" style="width:18px;color:var(--c-border)"></i>
+                    </button>
+                    <div class="acc-content">
+                        <ul class="acc-list">${item.list.map(li => `<li>${li}</li>`).join('')}</ul>
                     </div>
-                `;
-            }).join('');
+                </div>
+            `).join('');
             lucide.createIcons();
         }
 
-        window.onload = renderSections;
+        window.onload = init;
     </script>
 </body>
 </html>
