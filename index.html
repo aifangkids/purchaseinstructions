@@ -7,29 +7,34 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
-@font-face {
-    font-family: 'Huninn';
-    /* 這裡直接指向 .ttf 原始檔案 */
-    src: url('https://raw.githubusercontent.com/justfont/open-huninn-font/master/font/jf-openhuninn-1.1.ttf') format('truetype');
-    font-display: swap;
-};
+        /* 1. 使用與貨態查詢網頁完全一致的穩定字體定義 */
+        @font-face {
+            font-family: 'Huninn';
+            src: url('https://raw.githubusercontent.com/justfont/open-huninn-font/master/font/jf-openhuninn-1.1.ttf') format('truetype');
+            font-display: swap;
+        }
 
         /* 2. 定義 5 種色碼的主次關係 */
         :root {
-            --c-text-deep: #4a4a46;    /* 強化對比後的深色 (由 #a7a8a1 延伸) */
-            --c-text-main: #a7a8a1;    /* 您的原始色：用於副標與說明文字 */
-            --c-accent: #e2c890;       /* 原始色：金沙色，用於重點/按鈕 */
-            --c-bg-soft: #ede4d2;      /* 原始色：溫潤米，用於小區塊底色 */
-            --c-bg-light: #f9f4f1;     /* 原始色：極淺米，用於大背景 */
-            --c-border: #b9c3cd;       /* 原始色：莫蘭迪藍灰，用於邊框 */
+            --c-text-deep: #4a4a46;    /* 強化對比後的深色 */
+            --c-text-main: #a7a8a1;    /* 副標與說明文字 */
+            --c-accent: #e2c890;       /* 金沙色 */
+            --c-bg-soft: #ede4d2;      /* 溫潤米 */
+            --c-bg-light: #f9f4f1;     /* 極淺米 */
+            --c-border: #b9c3cd;       /* 莫蘭迪藍灰 */
             --white: #ffffff;
         }
 
-        /* 3. 基礎佈局 */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        /* 3. 基礎佈局與強制套用字體 */
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            /* 強制所有元件包含 input/button 都使用粉圓體 */
+            font-family: 'Huninn', 'Noto Sans TC', sans-serif !important;
+        }
         
         body {
-            font-family: 'Huninn', 'Noto Sans TC', sans-serif;
             background-color: var(--c-bg-light);
             color: var(--c-text-deep);
             line-height: 1.6;
@@ -49,7 +54,7 @@
             border: 1px solid rgba(185, 195, 205, 0.4);
         }
 
-        /* 標題區：確保對比鮮明 */
+        /* 標題區 */
         .header {
             background-color: var(--c-bg-soft);
             padding: 40px 20px;
@@ -130,7 +135,6 @@
             background: none;
             border: none;
             cursor: pointer;
-            font-family: inherit;
             color: var(--c-text-deep);
             font-weight: 500;
         }
@@ -218,7 +222,6 @@
             border: none;
             font-size: 1rem;
             font-weight: 700;
-            font-family: inherit;
             cursor: not-allowed;
             background-color: var(--c-border);
             color: var(--white);
@@ -230,7 +233,7 @@
         }
         .btn-submit.active {
             cursor: pointer;
-            background-color: #06C755; /* LINE 品牌綠以示功能 */
+            background-color: #06C755;
             box-shadow: 0 8px 20px rgba(6, 199, 85, 0.2);
         }
 
@@ -318,7 +321,7 @@
             { title: "關於斷貨", icon: "alert-circle", list: ["✓ 韓國童裝更新速度快，偶爾會遇到品牌方臨時通知斷貨", "✓ 若您的訂單中有商品斷貨，會立即通知，感謝您的理解"] },
             { title: "商品瑕疵標準", icon: "shield-check", list: ["✓ 收到商品後請第一時間開箱檢查", "✓ 些微尺寸差異屬正常情況", "⚠️ 以下情況屬瑕疵：", "✗ 夾雜斷針或其他金屬異物", "✗ 拉鍊損壞、縫線斷裂、鈕扣鬆脫", "✗ 尺寸標示錯誤、印花或刺繡不良"] },
             { title: "退換貨須知", icon: "refresh-ccw", list: ["✓ 更換尺寸請確保商品保持全新狀態", "✓ 若收到錯誤或缺少商品，將第一時間為您辦理", "✓ 襪子類等貼身衣物售出後，恕不提供退換貨"] },
-            { title: "衣物洗滌小提醒", icon: "shirt", list: ["✓ 建議攝氏 40 度以下手洗", "✓ 請使用溫和的中性洗劑", "✓ 如需機洗，請翻面放入洗衣袋", "✓ 深淺色衣物請務必分開洗滌", "✗ 禁止高溫煮洗、漂白或烘乾"] }
+            { title: "衣物洗滌小提醒", icon: "shirt", list: ["✓ 建議攝氏 40 度以下手洗", "✓ 請使用溫和的中性洗劑", "✓ 如需機洗，請翻面放入洗衣袋", "✓ 深淺色衣物請務必分開洗滌", "✗ 禁止高溫煮洗、漂白 or 烘乾"] }
         ];
 
         function toggleAcc(el) {
@@ -330,7 +333,7 @@
             chevronDown.classList.toggle('hidden', isOpen);
             chevronUp.classList.toggle('hidden', !isOpen);
             el.parentElement.style.borderColor = isOpen ? 'var(--c-accent)' : 'var(--c-border)';
-            el.parentElement.style.boxShadow = isOpen ? '0 5px 15px rgba(226, 200, 144, 0.1)' : 'none';
+            el.parentElement.style.boxShadow = isOpen ? '0 5px 15px rgba(167, 168, 161, 0.1)' : 'none';
         }
 
         function toggleUI() {
