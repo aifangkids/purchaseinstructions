@@ -3,84 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>韓國童裝預購登記</title>
+    <title>韓國童裝預購登記 | AiFang Kids</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
-        /* 1. 使用與貨態查詢網頁完全一致的穩定字體定義 */
-        @font-face {
-            font-family: 'Huninn';
-            src: url('https://raw.githubusercontent.com/justfont/open-huninn-font/master/font/jf-openhuninn-1.1.ttf') format('truetype');
-            font-display: swap;
-        }
-
-        /* 2. 定義 5 種色碼的主次關係 */
+        /* 1. 風格色彩變數 */
         :root {
-            --c-text-deep: #4a4a46;    /* 強化對比後的深色 */
-            --c-text-main: #a7a8a1;    /* 副標與說明文字 */
-            --c-accent: #e2c890;       /* 金沙色 */
-            --c-bg-soft: #ede4d2;      /* 溫潤米 */
-            --c-bg-light: #f9f4f1;     /* 極淺米 */
-            --c-border: #b9c3cd;       /* 莫蘭迪藍灰 */
+            --c-text-deep: #333333;
+            --c-text-main: #888888;
+            --c-accent: #e2c890;   /* 金沙色 */
+            --c-bg-soft: #ede4d2;  /* 溫潤米 */
+            --c-bg-light: #f9f4f1; /* 極淺米 */
+            --c-border: #eeeeee;
+            --c-line: #06C755;     /* LINE 綠 */
             --white: #ffffff;
         }
 
-        /* 3. 基礎佈局與強制套用字體 */
+        /* 2. 基礎佈局 - 統一使用 Noto Sans TC */
         * { 
             box-sizing: border-box; 
             margin: 0; 
             padding: 0; 
-            /* 強制所有元件包含 input/button 都使用粉圓體 */
-            font-family: 'Huninn', 'Noto Sans TC', sans-serif !important;
+            font-family: 'Noto Sans TC', sans-serif !important;
         }
         
         body {
-            background-color: var(--c-bg-light);
+            background-color: #fff;
             color: var(--c-text-deep);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             display: flex;
             justify-content: center;
-            padding: 20px 15px;
+            padding: 40px 20px; /* 依照您的要求調整 */
         }
 
         .main-card {
-            max-width: 480px;
+            max-width: 500px;
             width: 100%;
             background: var(--white);
-            border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(167, 168, 161, 0.15);
+            border-radius: 8px; /* 稍微減小圓角，顯得更專業 */
+            border: 1px solid var(--c-border);
             overflow: hidden;
-            border: 1px solid rgba(185, 195, 205, 0.4);
         }
 
         /* 標題區 */
         .header {
-            background-color: var(--c-bg-soft);
             padding: 40px 20px;
             text-align: center;
-            border-bottom: 2px solid var(--white);
+            border-bottom: 1px dashed var(--c-border);
         }
         .header h2 { 
-            font-size: 1.6rem; 
+            font-size: 1.5rem; 
             font-weight: 700; 
             color: var(--c-text-deep);
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             margin-bottom: 8px;
         }
         .header p { 
-            font-size: 0.9rem; 
+            font-size: 0.85rem; 
             color: var(--c-text-main); 
-            font-weight: 500;
         }
 
         /* 流程區塊 */
         .section-padding { padding: 24px; }
         
         .flow-container {
-            background-color: var(--white);
-            border: 2px solid var(--c-bg-soft);
-            border-radius: 20px;
+            background-color: var(--c-bg-light);
+            border-radius: 4px;
             padding: 20px;
         }
         .flow-title {
@@ -95,22 +84,21 @@
         .flow-item {
             display: flex;
             gap: 12px;
-            margin-bottom: 16px;
-            font-size: 0.95rem;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
         }
         .flow-step {
             font-weight: 700;
             color: var(--c-accent);
-            font-size: 1rem;
         }
-        .flow-content strong { color: var(--c-text-deep); }
+        .flow-content strong { color: #d9534f; }
         
         .flow-warn {
             margin-top: 15px;
             padding-top: 15px;
-            border-top: 1px dashed var(--c-border);
+            border-top: 1px dashed #ccc;
             font-size: 0.8rem;
-            color: var(--c-text-main);
+            color: #888;
             display: flex;
             flex-direction: column;
             gap: 4px;
@@ -122,9 +110,9 @@
         .acc-item {
             background: var(--white);
             border: 1px solid var(--c-border);
-            border-radius: 15px;
+            border-radius: 4px;
             margin-bottom: 10px;
-            transition: all 0.3s ease;
+            transition: 0.3s;
         }
         .acc-trigger {
             width: 100%;
@@ -138,7 +126,6 @@
             color: var(--c-text-deep);
             font-weight: 500;
         }
-        .acc-trigger:hover { background-color: var(--c-bg-light); border-radius: 15px; }
         
         .acc-icon-wrap {
             display: flex;
@@ -149,11 +136,11 @@
             width: 32px;
             height: 32px;
             background-color: var(--c-bg-soft);
-            border-radius: 10px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--c-accent);
+            color: #8a7b5f;
         }
 
         .acc-content {
@@ -168,22 +155,27 @@
         }
         .acc-list {
             list-style: none;
-            border-left: 3px solid var(--c-bg-soft);
-            padding-left: 15px;
-            margin-left: 10px;
+            padding-left: 10px;
         }
         .acc-list li {
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-            color: var(--c-text-deep);
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            color: #666;
+            position: relative;
+            padding-left: 15px;
+        }
+        .acc-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--c-accent);
         }
 
-        /* 底部固定區 */
+        /* 底部按鈕區 */
         .sticky-footer {
             padding: 24px;
             background-color: var(--white);
-            border-top: 1px solid var(--c-bg-soft);
-            position: relative;
+            border-top: 1px solid var(--c-border);
         }
 
         .agree-label {
@@ -191,14 +183,15 @@
             gap: 12px;
             cursor: pointer;
             margin-bottom: 20px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             align-items: flex-start;
+            color: #555;
         }
         .check-box {
-            width: 22px;
-            height: 22px;
-            border: 2px solid var(--c-border);
-            border-radius: 6px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--c-accent);
+            border-radius: 2px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -209,51 +202,47 @@
         }
         input[type="checkbox"]:checked + .check-box {
             background-color: var(--c-accent);
-            border-color: var(--c-accent);
-            transform: rotate(3deg);
         }
         .check-tick { color: white; display: none; }
         input[type="checkbox"]:checked + .check-box .check-tick { display: block; }
 
         .btn-submit {
             width: 100%;
-            padding: 16px;
-            border-radius: 15px;
+            padding: 18px;
+            border-radius: 4px;
             border: none;
             font-size: 1rem;
             font-weight: 700;
             cursor: not-allowed;
-            background-color: var(--c-border);
+            background-color: #ddd;
             color: var(--white);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
             transition: 0.3s;
+            letter-spacing: 1px;
         }
         .btn-submit.active {
             cursor: pointer;
-            background-color: #06C755;
-            box-shadow: 0 8px 20px rgba(6, 199, 85, 0.2);
+            background-color: var(--c-line);
         }
 
         #toast {
-            position: absolute;
-            top: -50px;
-            left: 24px;
-            right: 24px;
-            background: var(--c-text-deep);
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
             color: white;
-            padding: 10px;
-            border-radius: 12px;
-            text-align: center;
+            padding: 12px 24px;
+            border-radius: 50px;
             font-size: 0.85rem;
             display: none;
-            z-index: 10;
+            z-index: 100;
         }
 
         .hidden { display: none; }
-        strong { font-weight: 700; }
     </style>
 </head>
 <body>
@@ -283,7 +272,7 @@
                     <div class="flow-content">商品抵達台灣後，會盡速整理包裝出貨</div>
                 </div>
                 <div class="flow-warn">
-                    <p>⚠️ 使用匯款方式，請在 48 小時內完成結帳</p>                 
+                    <p>⚠️ 使用匯款方式，請在 48 小時內完成結帳</p>                  
                     <p>⚠️ 取貨請攜帶證件 (與收貨人姓名相符)</p>
                     <p>⚠️ 選品區皆為預購，不接急單還請見諒</p>
                     <p>⚠️ 現貨免等待至 7-11 賣貨便直接下單</p>
@@ -294,12 +283,12 @@
         <div id="acc-root" class="accordion-container"></div>
 
         <div class="sticky-footer">
-            <div id="toast">✨ 複製成功！ 正在開啟 LINE...</div>
+            <div id="toast">✨ 複製成功！正在開啟 LINE...</div>
             
             <label class="agree-label">
                 <input type="checkbox" id="agreed-checkbox" class="hidden" onchange="toggleUI()">
                 <div class="check-box">
-                    <i data-lucide="check" class="check-tick" style="width:16px;height:16px"></i>
+                    <i data-lucide="check" class="check-tick" style="width:14px;height:14px"></i>
                 </div>
                 <span>我已詳閱上方所有說明，並同意<strong>預購規則</strong>與<strong>瑕疵退換標準</strong></span>
             </label>
@@ -317,7 +306,7 @@
         
         const data = [
             { title: "購買規則與優惠", icon: "shopping-bag", list: ["💰 全部商品享 9 折優惠", "💰 使用[匯款]消費享 8折+免運 優惠", "💰 同步韓國品牌方換季優惠", "✓ 物流一律使用 7-11 交貨便與黑貓宅急便", "✓ 韓國童裝版型大多偏向合身，建議可以選擇大一個尺寸", "✓ 色差提醒：顏色請以收到的實際商品為準"] },
-            { title: "出貨時間與運費", icon: "truck", list: ["✓ 預購商品需要等待約 14–30 個工作天", "✓ 貨一抵台，便會以最快的速度整理寄出", "✓ [貨到付款] 運費預設為60元，實際依賣場為準", "✓[貨到付款]消費滿 TWD1,500 享免運優惠", "✗ 假日及物流休息日皆不列入工作天的計算"] },
+            { title: "出貨時間與運費", icon: "truck", list: ["✓ 預購商品需要等待約 14–30 個工作天", "✓ 貨一抵台，便會以最快的速度整理寄出", "✓ [貨到付款] 運費預設為60元，實際依賣場為準", "✓ [貨到付款]消費滿 TWD1,500 享免運優惠", "✗ 假日及物流休息日皆不列入工作天的計算"] },
             { title: "關於斷貨", icon: "alert-circle", list: ["✓ 韓國童裝更新速度快，偶爾會遇到品牌方臨時通知斷貨", "✓ 若您的訂單中有商品斷貨，會立即通知，感謝您的理解"] },
             { title: "商品瑕疵標準", icon: "shield-check", list: ["✓ 收到商品後請第一時間開箱檢查", "✓ 些微尺寸差異屬正常情況", "⚠️ 以下情況屬瑕疵：", "✗ 夾雜斷針或其他金屬異物", "✗ 拉鍊損壞、縫線斷裂、鈕扣鬆脫", "✗ 尺寸標示錯誤、印花或刺繡不良"] },
             { title: "退換貨須知", icon: "refresh-ccw", list: ["✓ 更換尺寸請確保商品保持全新狀態", "✓ 若收到錯誤或缺少商品，將第一時間為您辦理", "✓ 襪子類等貼身衣物售出後，恕不提供退換貨"] },
@@ -326,14 +315,11 @@
 
         function toggleAcc(el) {
             const content = el.nextElementSibling;
-            const chevronDown = el.querySelector('.lucide-chevron-down');
-            const chevronUp = el.querySelector('.lucide-chevron-up');
             const isOpen = content.classList.toggle('active');
-            
-            chevronDown.classList.toggle('hidden', isOpen);
-            chevronUp.classList.toggle('hidden', !isOpen);
+            const chevron = el.querySelector('.lucide-chevron-down');
+            chevron.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+            chevron.style.transition = '0.3s';
             el.parentElement.style.borderColor = isOpen ? 'var(--c-accent)' : 'var(--c-border)';
-            el.parentElement.style.boxShadow = isOpen ? '0 5px 15px rgba(167, 168, 161, 0.1)' : 'none';
         }
 
         function toggleUI() {
@@ -352,14 +338,12 @@
 
         function handleFinal() {
             if (!document.getElementById('agreed-checkbox').checked) return;
-            
             const area = document.createElement('textarea');
             area.value = MSG;
             document.body.appendChild(area);
             area.select();
             document.execCommand('copy');
             document.body.removeChild(area);
-
             const toast = document.getElementById('toast');
             toast.style.display = 'block';
             setTimeout(() => { window.open(LINE_URL, '_blank'); }, 800);
@@ -375,8 +359,7 @@
                             <div class="icon-circle"><i data-lucide="${item.icon}" style="width:16px;height:16px"></i></div>
                             <span>${item.title}</span>
                         </div>
-                        <i data-lucide="chevron-down" style="width:18px;color:var(--c-border)"></i>
-                        <i data-lucide="chevron-up" class="hidden" style="width:18px;color:var(--c-border)"></i>
+                        <i data-lucide="chevron-down" style="width:18px;color:var(--c-text-main)"></i>
                     </button>
                     <div class="acc-content">
                         <ul class="acc-list">${item.list.map(li => `<li>${li}</li>`).join('')}</ul>
@@ -385,7 +368,6 @@
             `).join('');
             lucide.createIcons();
         }
-
         window.onload = init;
     </script>
 </body>
