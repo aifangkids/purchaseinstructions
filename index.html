@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AiFang Kids | 預購說明</title>
+    <title>AiFang Kids | 購物與預購須知</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     
@@ -14,7 +14,8 @@
             --border-color: #f2f2f2;
             --text-main: #333;
             --text-gray: #888;
-            --line-green: #06C755;
+            --accent-red: #d9534f;
+            --gold: #b89765;
         }
 
         * { 
@@ -39,7 +40,6 @@
             background: #fff;
         }
 
-        /* 標題與 Admin 風格一致 */
         .header {
             padding: 40px 0;
             text-align: center;
@@ -59,7 +59,6 @@
             letter-spacing: 1px;
         }
 
-        /* 流程區塊 - 仿 Cart 清單 */
         .section-padding { margin-bottom: 40px; }
         .flow-container {
             background-color: #fafafa;
@@ -89,7 +88,7 @@
             color: var(--baby-pink);
             font-family: 'Inter', sans-serif;
         }
-        .flow-content strong { color: #d9534f; }
+        .flow-content strong { color: var(--accent-red); }
         
         .flow-warn {
             margin-top: 20px;
@@ -100,7 +99,6 @@
             gap: 6px;
         }
 
-        /* 摺疊選單區 - 極簡化 */
         .accordion-container { margin-bottom: 50px; }
         .acc-item {
             border-bottom: 1px solid var(--border-color);
@@ -143,7 +141,7 @@
             padding: 0;
         }
         .acc-content.active {
-            max-height: 1000px;
+            max-height: 1200px;
             padding-bottom: 25px;
         }
         .acc-list {
@@ -162,8 +160,8 @@
             left: -15px;
             color: var(--baby-pink);
         }
+        .acc-list li strong { color: var(--text-main); font-weight: 700; }
 
-        /* 底部按鈕區 - 仿 Cart 按鈕樣式 */
         .sticky-footer {
             padding: 40px 0;
             border-top: 1px solid var(--border-color);
@@ -245,35 +243,35 @@
     <div class="main-card">
         <div class="header">
             <h2>SHOPPING GUIDE</h2>
-            <p>韓國童裝預購登記須知</p>
+            <p>韓國童裝訂購須知與會員制度</p>
         </div>
 
         <div class="section-padding">
             <div class="flow-container">
                 <div class="flow-title">
                     <i data-lucide="clipboard-list" style="width:18px;height:18px"></i>
-                    ORDER PROCESS / 登記流程
+                    ORDER PROCESS / 訂購流程
                 </div>
                 <div class="flow-item">
                     <span class="flow-step">01</span>
-                    <div class="flow-content">選品加入購物車並填寫資訊，<strong>傳送至 LINE 聯繫</strong></div>
+                    <div class="flow-content">本站僅供<strong>商品瀏覽與清單訂購</strong>，無金流支付功能</div>
                 </div>
                 <div class="flow-item">
                     <span class="flow-step">02</span>
-                    <div class="flow-content">登記完成會提供匯款資訊/賣場，請完成付款</div>
+                    <div class="flow-content">選品加入購物車並填寫資訊，<strong>傳送至 LINE 聯繫</strong></div>
                 </div>
                 <div class="flow-item">
                     <span class="flow-step">03</span>
-                    <div class="flow-content">商品抵台後，依照下單順序完成出貨</div>
+                    <div class="flow-content">確認清單後，將提供<strong>7-11 賣貨便賣場</strong>完成下單</div>
                 </div>
                 <div class="flow-item">
                     <span class="flow-step">04</span>
-                    <div class="flow-content"><strong>固定每週三、週六結單；固定每週一出貨</strong></div>
+                    <div class="flow-content"><strong>面交僅限：雲林縣斗六市-斗六國中正大門</strong></div>
                 </div>
                 <div class="flow-warn">
-                    <p>● 使用匯款方式，請務必於 48 小時內完成結帳</p>                 
-                    <p>● 取貨請攜帶與收件人姓名相符之身份證件</p>
-                    <p>● 預購品追加期長，不接受急單還請見諒</p>
+                    <p>● 官網不提供直接金流與物流服務，需透過 LINE 導向賣場</p>                  
+                    <p>● 固定每週三、週六結單；固定每週一出貨</p>
+                    <p>● 預購品追加期長（約 14-30 工作天），不接受急單</p>
                 </div>
             </div>
         </div>
@@ -288,7 +286,7 @@
                 <div class="check-box">
                     <i data-lucide="check" class="check-tick" style="width:14px;height:14px"></i>
                 </div>
-                <span>我已詳閱上方所有說明，並同意<strong style="text-decoration: underline;">預購規則</strong>與<strong style="text-decoration: underline;">瑕疵退換標準</strong></span>
+                <span>我已詳閱上方所有說明，並同意<strong>訂購規則</strong>與<strong>會員權益</strong></span>
             </label>
 
             <button id="confirm-button" onclick="handleFinal()" class="btn-submit">
@@ -299,16 +297,53 @@
     </div>
 
     <script>
-        const MSG = "我已詳細閱讀預購說明、瑕疵與退換貨標準，並同意進行預購登記。";
+        const MSG = "我已詳細閱讀預購說明、會員制度與取貨規則，並同意進行訂購登記。";
         const LINE_URL = "https://lin.ee/YqevOKl"; 
         
         const data = [
-            { title: "購買規則與優惠", icon: "shopping-bag", list: ["💰 全部商品享 9 折優惠", "💰 使用[匯款]消費享 8折+免運 優惠", "💰 同步韓國品牌方換季優惠", "✓ 物流使用 7-11 交貨便與黑貓宅急便", "✓ 韓國版型偏小，建議可選擇大一號尺寸", "✓ 顏色以收到之實際商品實拍為主"] },
-            { title: "出貨時間與運費", icon: "truck", list: ["✓ 預購商品追加約 14–30 個工作天", "✓ 貨到台灣後立即安排品檢寄出", "✓ [貨到付款] 運費預設為 NT$60", "✓ [貨到付款] 滿 NT$1,500 享免運", "✗ 假日及韓國國定假日不計入追加期"] },
-            { title: "關於斷貨處理", icon: "alert-circle", list: ["✓ 韓國更迭極快，偶爾遇品牌臨時通知斷貨", "✓ 若遇斷貨將立即通知辦理換款或退款"] },
-            { title: "商品瑕疵標準", icon: "shield-check", list: ["✓ 收到商品請於三天內開箱檢查錄影", "✓ 1-3cm 尺寸差異與些微線頭屬正常", "⚠️ 重大瑕疵定義：", "✗ 夾雜金屬異物、破損、大面積污漬", "✗ 拉鍊損壞、鈕扣脫落、嚴重刺繡不良"] },
-            { title: "退換貨須知", icon: "refresh-ccw", list: ["✓ 退換貨需保持商品全新且未經洗滌", "✓ 若收到錯誤商品，我們將承擔所有運費", "✓ 襪子與貼身衣物基於衛生恕不退換"] },
-            { title: "衣物洗滌小提醒", icon: "shirt", list: ["✓ 建議 40 度以下手洗，或放入洗衣袋", "✓ 深淺色衣物請務必分開洗滌", "✗ 禁止高溫烘乾與強力漂白洗劑"] }
+            { 
+                title: "限時優惠與折扣", 
+                icon: "badge-percent", 
+                list: [
+                    "<strong>全部新品：</strong>全數享有 <strong>9 折</strong> 優惠",
+                    "<strong>1+1 組合：</strong>任意選購 2 件享 1+1 組合價（若數量不足 2 件，系統將自動不計折扣）",
+                    "<strong>社群禮：</strong>Instagram 分享並 TAG <strong>@aifang_kids</strong> 可獲 <strong>$100 優惠卷</strong>"
+                ] 
+            },
+            { 
+                title: "運費說明與取貨", 
+                icon: "truck", 
+                list: [
+                    "<strong>7-11 賣貨便：</strong>運費依當月平台設定為準",
+                    "<strong>免運優惠：</strong>消費滿 <strong>NT$1,500</strong> 享免運費",
+                    "<strong>面交免運：</strong>僅限 <strong>雲林縣斗六市-斗六國中正大門</strong>",
+                    "✗ 假日及韓國國定假日不計入追加期"
+                ] 
+            },
+            { 
+                title: "VIP 會員制度", 
+                icon: "crown", 
+                list: [
+                    "<strong>VIP 會員：</strong>累計消費滿 $10,000",
+                    "✓ 每筆訂單可使用 <strong>$150 優惠卷</strong>",
+                    "✓ 每筆訂單<strong>不限金額免運費</strong>",
+                    "✓ 生日禮金 <strong>$200</strong>",
+                    "<strong>VVIP 會員：</strong>累計消費滿 $30,000",
+                    "✓ 每筆訂單可使用 <strong>$350 優惠卷</strong>",
+                    "✓ 每筆訂單<strong>不限金額免運費</strong>",
+                    "✓ 生日禮金 <strong>$300</strong>"
+                ] 
+            },
+            { 
+                title: "商品瑕疵與退換", 
+                icon: "shield-check", 
+                list: [
+                    "✓ 收到商品請於三天內開箱檢查並錄影",
+                    "✓ 1-3cm 尺寸差異與些微線頭屬正常現象",
+                    "✓ 若遇斷貨將立即通知辦理換款或退款",
+                    "✗ 襪子與貼身衣物基於衛生考量恕不退換"
+                ] 
+            }
         ];
 
         function toggleAcc(el) {
