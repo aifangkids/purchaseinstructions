@@ -9,13 +9,13 @@
     
     <style>
         :root {
-            --primary-color: #d9534f;
-            --success-color: #28a745;
-            --line-color: #00B900;
-            --text-dark: #333;
-            --text-light: #777;
-            --bg-gray: #f8f9fa;
-            --border-color: #f2f2f2;
+            /* 奶油粉色系變數 */
+            --bg-cream: #FFFDF9;       /* 溫暖的奶油白背景 */
+            --bg-sidebar: #FDF5F2;     /* 次要區塊或側邊欄的淡粉奶油色 */
+            --primary-pink: #F4D3D3;   /* 主色：優雅的粉撲色 */
+            --accent-pink: #E6B3B3;    /* 深一點的粉：用於 Hover 或重點 */
+            --text-main: #5A4B41;      /* 溫暖的深咖啡色文字 */
+            --text-muted: #8C7B70;     /* 輔助文字顏色 */
         }
 
         * { 
@@ -25,28 +25,78 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
-            background-color: var(--bg-gray);
-            color: var(--text-dark);
+            background-color: var(--bg-cream);
+            color: var(--text-main);
             line-height: 1.8;
             -webkit-font-smoothing: antialiased;
             display: flex;
             justify-content: center;
             padding: 40px 20px;
+            overflow-x: hidden; /* 防止物理擺動產生水平捲軸 */
         }
 
+        /* ==========================================================================
+           🌸 緩慢飄落背景樣式 (Hourglass / Floating Particles)
+           ========================================================================= */
+        #falling-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            pointer-events: none; /* 讓滑鼠穿透，不影響點擊網頁內容 */
+            z-index: -1;          /* 確保置於所有卡片與文字的底層 */
+        }
+
+        .particle {
+            position: absolute;
+            top: -60px; /* 從視窗上方外面開始掉落 */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            pointer-events: none;
+            opacity: 0;
+            animation: slowFall linear forwards;
+        }
+
+        @keyframes slowFall {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.65; /* 漸漸浮現，避免太突兀，維持背景柔和感 */
+            }
+            90% {
+                opacity: 0.65;
+            }
+            100% {
+                /* 掉落到視窗下方，並帶有隨機的左右物理飄移與旋轉 */
+                transform: translateY(108vh) translateX(var(--drift-x)) rotate(var(--drift-rotate));
+                opacity: 0;
+            }
+        }
+
+        /* ==========================================================================
+           主要卡片與內容樣式
+           ========================================================================= */
         .main-card {
             max-width: 600px;
             width: 100%;
-            background: #fff;
+            background: rgba(255, 255, 255, 0.93); /* 微透出背景的白底，質感升級 */
+            backdrop-filter: blur(4px);            /* 讓卡片背後微模糊，提升閱讀舒適度 */
             padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(90, 75, 65, 0.04);
+            position: relative;
+            z-index: 1;
         }
 
         .header {
             padding-bottom: 30px;
             text-align: center;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--primary-pink);
             margin-bottom: 40px;
         }
         .header h2 { 
@@ -54,25 +104,25 @@
             font-weight: 700; 
             letter-spacing: 3px;
             margin-bottom: 10px;
-            color: var(--text-dark);
+            color: var(--text-main);
             text-transform: uppercase;
         }
         .header p { 
             font-size: 13px;
-            color: var(--text-light); 
+            color: var(--text-muted); 
             letter-spacing: 1px;
         }
 
         .section-padding { margin-bottom: 40px; }
         
         .flow-container {
-            background-color: #fafafa;
+            background-color: var(--bg-sidebar);
             padding: 30px;
-            border-radius: 6px;
-            border: 1px solid #f0f0f0;
+            border-radius: 8px;
+            border: 1px solid var(--primary-pink);
         }
         .flow-title {
-            color: var(--primary-color);
+            color: var(--text-main);
             font-size: 14px;
             font-weight: 700;
             display: flex;
@@ -81,45 +131,48 @@
             margin-bottom: 20px;
             letter-spacing: 1px;
         }
+        .flow-title i {
+            color: var(--accent-pink);
+        }
         .flow-item {
             display: flex;
             gap: 15px;
             margin-bottom: 15px;
             font-size: 14px;
             padding-bottom: 12px;
-            border-bottom: 1px dashed #eee;
+            border-bottom: 1px dashed var(--primary-pink);
             align-items: flex-start;
         }
         .flow-step {
             font-weight: 700;
-            color: var(--primary-color);
+            color: var(--accent-pink);
             font-family: 'Inter', sans-serif;
             font-size: 16px;
             line-height: 1;
             margin-top: 2px;
         }
         .flow-content {
-            color: #444;
+            color: var(--text-main);
         }
-        .flow-content strong { color: var(--primary-color); }
+        .flow-content strong { color: var(--accent-pink); }
         
         .flow-warn {
             margin-top: 20px;
             font-size: 13px;
-            color: #666;
+            color: var(--text-muted);
             display: flex;
             flex-direction: column;
             gap: 8px;
-            background: #fff;
+            background: #ffffff;
             padding: 15px;
-            border-radius: 4px;
-            border-left: 3px solid var(--primary-color);
+            border-radius: 6px;
+            border-left: 4px solid var(--accent-pink);
         }
 
         .accordion-container { margin-bottom: 10px; }
         
         .acc-item {
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--primary-pink);
             transition: 0.3s;
         }
         .acc-trigger {
@@ -131,9 +184,13 @@
             background: none;
             border: none;
             cursor: pointer;
-            color: var(--text-dark);
+            color: var(--text-main);
             font-size: 15px;
             font-weight: 700;
+            transition: color 0.2s;
+        }
+        .acc-trigger:hover {
+            color: var(--accent-pink);
         }
         
         .acc-icon-wrap {
@@ -144,12 +201,12 @@
         .icon-circle {
             width: 32px;
             height: 32px;
-            background-color: #f9f9f9;
+            background-color: var(--bg-sidebar);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary-color);
+            color: var(--accent-pink);
         }
 
         .acc-content {
@@ -169,7 +226,7 @@
         .acc-list li {
             font-size: 13.5px;
             margin-bottom: 10px;
-            color: #555;
+            color: var(--text-main);
             position: relative;
             line-height: 1.7;
         }
@@ -177,28 +234,26 @@
             content: "•";
             position: absolute;
             left: -15px;
-            color: var(--primary-color);
+            color: var(--accent-pink);
             font-size: 16px;
         }
-        .acc-list li strong { color: var(--text-dark); font-weight: 700; }
+        .acc-list li strong { color: var(--text-main); font-weight: 700; }
         
         .acc-list li small {
             display: block;
-            color: var(--text-light);
+            color: var(--text-muted);
             margin-top: 6px;
-            background: #fcf8e3;
-            padding: 10px;
-            border-left: 3px solid #fbeed5;
-            border-radius: 4px;
+            background: var(--bg-sidebar);
+            padding: 12px;
+            border-left: 3px solid var(--primary-pink);
+            border-radius: 6px;
             line-height: 1.6;
         }
 
-        /* ==========================================================================
-           手機響應式微調 (RWD Mobile) 
-           ========================================================================= */
+        /* 手機響應式微調 (RWD Mobile) */
         @media (max-width: 480px) {
             body { padding: 15px 10px; }
-            .main-card { padding: 20px 15px; }
+            .main-card { padding: 25px 15px; border-radius: 8px; }
             .header { padding-bottom: 20px; margin-bottom: 25px; }
             .header h2 { font-size: 18px; }
             .header p { font-size: 12px; }
@@ -214,6 +269,8 @@
     </style>
 </head>
 <body>
+
+    <div id="falling-container"></div>
 
     <div class="main-card">
         <div class="header">
@@ -254,6 +311,7 @@
     </div>
 
     <script>
+        // 1. 手風琴與基本資料
         const data = [
             { 
                 title: "優惠", 
@@ -274,7 +332,6 @@
                     "物流中心理貨與司機配送服務在國定假日會縮減或停班，<strong>實際送達時間會同步延後</strong>"
                 ] 
             },
-
             { 
                 title: "商品瑕疵說明", 
                 icon: "shield-alert", 
@@ -316,7 +373,57 @@
             chevron.style.transition = '0.3s';
         }
 
+        // ==========================================================================
+        // 🌸 2. 核心：沙漏式緩慢飄落粒子引擎
+        // ==========================================================================
+        const particleImages = [
+            './images/ui/01.png',
+            './images/ui/02.png',
+            './images/ui/03.png',
+            './images/ui/04.png',
+            './images/ui/05.png'
+        ];
+
+        function createParticle() {
+            const container = document.getElementById('falling-container');
+            if (!container) return;
+
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+
+            // 隨機選取 1~5 其中一張圖片
+            const randomImg = particleImages[Math.floor(Math.random() * particleImages.length)];
+            particle.style.backgroundImage = `url('${randomImg}')`;
+
+            // 隨機尺寸：範圍介於 50px ~ 100px 之間，當作背景精緻不突兀
+            const size = Math.random() * 50 + 50;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+
+            // 隨機初始水平位置 (0% ~ 100% 視窗寬度)
+            particle.style.left = `${Math.random() * 100}vw`;
+
+            // 緩慢下落時間：一條粒子掉落花費 9 ~ 16 秒，營造沙漏、初雪般的慢速感
+            const duration = Math.random() * 7 + 9;
+            particle.style.animationDuration = `${duration}s`;
+
+            // 物理飄移隨機變數 (利用 CSS Variable 帶入 Keyframes)
+            const driftX = (Math.random() * 120) - 60; // 左右飄移 -60px ~ +60px
+            const driftRotate = (Math.random() * 360) - 180; // 旋轉角度 -180deg ~ +180deg
+            particle.style.setProperty('--drift-x', `${driftX}px`);
+            particle.style.setProperty('--drift-rotate', `${driftRotate}deg`);
+
+            container.appendChild(particle);
+
+            // 當該粒子完整播完動畫後，自動從網頁 DOM 移除，確保手機與電腦運作極速順暢
+            setTimeout(() => {
+                particle.remove();
+            }, duration * 1000);
+        }
+
+        // 初始化
         function init() {
+            // A. 渲染手風琴內容
             const root = document.getElementById('acc-root');
             root.innerHTML = data.map(item => `
                 <div class="acc-item">
@@ -325,7 +432,7 @@
                             <div class="icon-circle"><i data-lucide="${item.icon}" style="width:16px;height:16px"></i></div>
                             <span>${item.title}</span>
                         </div>
-                        <i data-lucide="chevron-down" style="width:18px;color:var(--text-light)"></i>
+                        <i data-lucide="chevron-down" style="width:18px;color:var(--text-muted)"></i>
                     </button>
                     <div class="acc-content">
                         <ul class="acc-list">${item.list.map(li => `<li>${li}</li>`).join('')}</ul>
@@ -333,7 +440,18 @@
                 </div>
             `).join('');
             lucide.createIcons();
+
+            // B. 啟動粒子生成器：每 650 毫秒產生一個新的小裝飾圖，密度適中精美
+            setInterval(createParticle, 650);
+            
+            // 先預填幾個，避免一進網頁時上方太空
+            for(let i=0; i<8; i++) {
+                setTimeout(() => {
+                    createParticle();
+                }, i * 300);
+            }
         }
+        
         window.onload = init;
     </script>
 </body>
